@@ -4,7 +4,11 @@
     "strict": true,
     "noEmitHelpers": false,
     "strictNullChecks": false,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "extends": "./node_modules/webpack-vue-typescript-config/tsconfig.common.json",
   "include": [
