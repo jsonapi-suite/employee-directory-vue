@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "declaration": false,
+    "strict": true,
+    "noEmitHelpers": false,
+    "strictNullChecks": false,
+    "experimentalDecorators": true
+  },
+  "extends": "./node_modules/webpack-vue-typescript-config/tsconfig.common.json",
+  "include": [
+      "src/**/*.ts",
+      "dev-entry.ts",
+      // "**/*.test.ts",
+      "./node_modules/webpack-vue-typescript-config/types/**/*.d.ts"
+  ]
+}

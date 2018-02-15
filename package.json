@@ -1,0 +1,54 @@
+{
+  "name": "employee-directory",
+  "version": "1.0.0",
+  "main": "dist/bundle.js",
+  "module": "src/index.ts",
+  "repository": "https://github.com/jsonapi-suite/employee-directory-vue",
+  "author": "Lee Richmond <richmolj@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "clean": "rimraf ./dist ./build ./coverage ./lib",
+    "dev": "NODE_ENV=development webpack-dev-server --inline --progress --config ./webpack.dev.config.js",
+    "prebuild": "yarn run clean",
+    "build": "NODE_ENV=production webpack --progress --config ./webpack.build.config.js",
+    "build:dev": "NODE_ENV=development webpack --progress --config ./webpack.dev.config.js",
+    "test": "NODE_ENV=test multi=\"mocha-osx-reporter=- spec=-\" mocha-webpack --reporter mocha-multi --webpack-config ./webpack.test.config.js --ui bdd-lazy-var/getter --require test/setup.js --watch \"test/**/*.test.ts\" ",
+    "test:server": "PORT=8081 yarn dev",
+    "test:integration": "mocha -r test/tshook.js \"test/integration/**.ts\""
+  },
+  "engines": {
+    "node": ">=8.7.0",
+    "yarn": ">=1.2.1"
+  },
+  "dependencies": {
+    "bootstrap": "4.0.0-beta.2",
+    "vue": "2.5.13",
+    "vue-router": "3.0.1",
+    "vue-template-compiler": "2.5.13",
+    "vue-test-utils": "1.0.0-beta.6"
+  },
+  "devDependencies": {
+    "webpack-vue-typescript-config": "1.1.7",
+    "@types/chai": "4.0.6",
+    "@types/mocha": "2.2.44",
+    "@types/sinon": "2.3.7",
+    "babel-plugin-dual-import": "1.1.5",
+    "chai": "4.1.2",
+    "css-loader": "0.28.7",
+    "lerna": "^2.5.1",
+    "mocha": "4.0.1",
+    "mocha-let-ts": "1.1.0",
+    "mocha-multi": "0.11.1",
+    "mocha-osx-reporter": "0.1.2",
+    "mocha-webpack": "1.0.1",
+    "rollup": "0.51.7",
+    "sinon": "4.1.2",
+    "typescript": "2.6.1",
+    "vue-hot-reload-api": "^2.2.3",
+    "vue-loader": "13.5.0",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "2.9.4",
+    "webpack-hot-middleware": "2.21.0"
+  }
+}
