@@ -1,12 +1,17 @@
 <template>
   <div id="app">
+    <employee-search />
   </div>
 </template>
 
 <script lang="ts">
-import Vue, { VueConstructor } from 'vue'
+import Vue, { VueConstructor } from "vue"
+import EmployeeSearch from "@/views/employee-search.vue"
 
 export default Vue.extend({
+  components: {
+    EmployeeSearch
+  },
   data() {
     return { }
   }
