@@ -1,7 +1,5 @@
 <template>
     <div class="card search">
-      <h1>Employee Directory</h1>
-
       <div class='search-controls'>
         <form v-on:submit.prevent="search()">
           <div class="row">

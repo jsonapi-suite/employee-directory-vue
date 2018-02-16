@@ -1,16 +1,29 @@
 <template>
   <div id="app">
-    <employee-search />
+    <div class="container-fluid">
+      <h1>Employee Directory</h1>
+
+      <div class="row">
+        <div class="col-md-6">
+          <employee-search />
+        </div>
+        <div class="col-md-6">
+          <employee-form />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue, { VueConstructor } from "vue"
 import EmployeeSearch from "@/views/employee-search.vue"
+import EmployeeForm from "@/views/employee-form.vue"
 
 export default Vue.extend({
   components: {
-    EmployeeSearch
+    EmployeeSearch,
+    EmployeeForm
   },
   data() {
     return { }
