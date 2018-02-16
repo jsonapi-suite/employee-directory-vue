@@ -19,6 +19,10 @@
               </div>
 
               <div class="meta">
+                <div class="float-right pagination">
+                  <a v-if="hasPrevPage" @click="paginate(true)">&laquo; Prev</a>
+                  <a v-if="hasNextPage" @click="paginate()">Next &raquo;</a>
+                </div>
                 <span class="float-right total">Total: {{totalCount}}</span>
               </div>
             </div>
@@ -63,7 +67,8 @@ export default Vue.extend({
       employees: [] as Employee[],
       query: {} as WhereClause,
       sort,
-      totalCount: null as number | null
+      totalCount: null as number | null,
+      currentPage: 1 as number
     }
   },
   created() {
@@ -75,7 +80,15 @@ export default Vue.extend({
         .where(this.query)
         .order(this.sort)
         .stats({ total: "count" })
+        .page(this.currentPage)
+        .per(10)
         .includes({ current_position: "department" })
+    },
+    hasPrevPage() : boolean {
+      return this.currentPage > 1
+    },
+    hasNextPage() : boolean {
+      return (this.currentPage * 10) < (this.totalCount || 0)
     }
   },
   methods: {
@@ -83,6 +96,12 @@ export default Vue.extend({
       let { data, meta } = await this.scope.all()
       this.employees = data
       this.totalCount = meta.stats.total.count
+    },
+    paginate(back: boolean = false) {
+      let count = 1
+      if (back) count = -1
+      this.currentPage = this.currentPage + count
+      this.search()
     },
     doSort(attribute: string) {
       if (this.sort[attribute] && this.sort[attribute] === "desc") {
@@ -103,5 +122,21 @@ export default Vue.extend({
 
 .total {
   color: white;
+}
+
+.pagination {
+  margin-left: 1rem;
+
+  a {
+    color: #90CAF9 !important;
+
+    &:hover {
+      color: lighten(#90CAF9, 10%) !important;
+    }
+
+    &:nth-child(2) {
+      margin-left: 0.5rem;
+    }
+  }
 }
 </style>
