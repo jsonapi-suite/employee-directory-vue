@@ -3,6 +3,7 @@ import {
   Model,
   Attr,
   HasMany,
+  HasOne,
   BelongsTo
 } from "jsorm"
 
@@ -21,6 +22,7 @@ export class Employee extends ApplicationRecord {
   @Attr() age: number
 
   @HasMany() positions: Position[]
+  @HasOne() currentPosition: Position
 }
 
 @Model()
