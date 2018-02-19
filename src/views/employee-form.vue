@@ -26,7 +26,7 @@
         </div>
 
         <div class="positions">
-          <div v-for="(position, index) in employee.positions" :key="position.id" class="row position">
+          <div v-if="!position.isMarkedForDestruction" v-for="(position, index) in employee.positions" :key="position.id" class="row position">
             <div class="col-md-4">
               <div class="form-group">
                 <input v-model="position.title" type="text" class="form-control" placeholder="Title" />
@@ -44,6 +44,12 @@
                 </select>
                 <p v-if="position.errors.department">{{ position.errors.department.message }}</p>
               </div>
+            </div>
+            <div v-if="index !== 0 || employee.positions.length > 1" class="col-md-1">
+              <button @click.prevent="removePosition(position)" type="button" class="float-right btn-add btn btn-default btn-xs">x</button>
+            </div>
+            <div class="col-md-1">
+              <button @click.prevent="addPosition()" type="button" class="float-right btn-add btn btn-default btn-xs">+</button>
             </div>
           </div>
         </div>
@@ -78,6 +84,23 @@ export default Vue.extend({
     },
     async submit() {
       await this.employee.save({ with: { positions: "department" }})
+    },
+    addPosition() {
+      this.employee.positions.push(new Position())
+      this._recalculateHistoricalIndices()
+    },
+    removePosition(position: Position) {
+      position.isMarkedForDestruction = true
+      this._recalculateHistoricalIndices()
+    },
+    _recalculateHistoricalIndices() {
+      const positions = this.employee.positions.filter((p) => {
+        return !p.isMarkedForDestruction
+      })
+
+      positions.forEach((p: Position, i: number) => {
+        p.historicalIndex = i + 1
+      })
     }
   }
 })
