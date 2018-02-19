@@ -23,6 +23,10 @@ export class Employee extends ApplicationRecord {
 
   @HasMany() positions: Position[]
   @HasOne() currentPosition: Position
+
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`
+  }
 }
 
 @Model()

@@ -62,10 +62,15 @@
 
 <script lang="ts">
 import Vue from "vue"
+import EventBus from "@/event-bus"
 import { Employee, Position, Department } from "@/models"
 
 export default Vue.extend({
   created() {
+    EventBus.$on('employee_selected', (employeeId: string) => {
+      this.loadEmployee(employeeId)
+    })
+
     this.fetchDepartments()
   },
   data: function () {
@@ -79,11 +84,21 @@ export default Vue.extend({
     }
   },
   methods: {
+    async loadEmployee(employeeId: string) {
+      let { data } = await Employee
+        .includes({ positions: "department" })
+        .find(employeeId)
+
+      if (data) this.employee = data
+    },
     async fetchDepartments() {
       this.possibleDepartments = (await Department.all()).data
     },
     async submit() {
-      await this.employee.save({ with: { positions: "department" }})
+      const success = await this.employee
+        .save({ with: { positions: "department" }})
+
+      if (success) EventBus.$emit("employee_save", this.employee)
     },
     addPosition() {
       this.employee.positions.push(new Position())

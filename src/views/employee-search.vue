@@ -40,7 +40,11 @@
 
         <tbody>
           <tr v-for="employee in employees" :key="employee.id">
-            <td>{{ employee.firstName }} {{ employee.lastName }}</td>
+            <td>
+              <a @click="selectEmployee(employee)">
+                {{ employee.fullName }}
+              </a>
+            </td>
             <td>{{ employee.age }}</td>
             <td>{{ employee.currentPosition.title }}</td>
             <td>{{ employee.currentPosition.department.name }}</td>
@@ -52,6 +56,7 @@
 
 <script lang="ts">
 import Vue from "vue"
+import EventBus from "@/event-bus"
 import { Scope, WhereClause, SortScope } from "jsorm"
 import { Employee } from "@/models"
 
@@ -70,6 +75,10 @@ export default Vue.extend({
     }
   },
   created() {
+    EventBus.$on('employee_save', (employee: Employee) => {
+      this.search()
+    })
+
     this.search()
   },
   computed: {
@@ -109,6 +118,9 @@ export default Vue.extend({
       }
       this.search()
     },
+    selectEmployee(employee: Employee): void {
+      EventBus.$emit('employee_selected', employee.id)
+    }
   }
 })
 </script>
