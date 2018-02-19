@@ -8,16 +8,19 @@
           <div class="col-md-4">
             <div class="form-group">
               <input v-model="employee.firstName" type="text" class="form-control" placeholder="First Name" />
+              <p v-if="employee.errors.firstName">{{ employee.errors.firstName.message }}</p>
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
               <input v-model="employee.age" type="text" class="form-control" placeholder="Age" />
+              <p v-if="employee.errors.age">{{ employee.errors.age.message }}</p>
             </div>
           </div>
           <div class="col-md-5">
             <div class="form-group">
               <input v-model="employee.lastName" type="text" class="form-control" placeholder="Last Name" />
+              <p v-if="employee.errors.lastName">{{ employee.errors.lastName.message }}</p>
             </div>
           </div>
         </div>
@@ -27,6 +30,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <input v-model="position.title" type="text" class="form-control" placeholder="Title" />
+                <p v-if="position.errors.title">{{ position.errors.title.message }}</p>
               </div>
             </div>
             <div class="col-md-6">
@@ -38,6 +42,7 @@
                     {{ department.name }}
                   </option>
                 </select>
+                <p v-if="position.errors.department">{{ position.errors.department.message }}</p>
               </div>
             </div>
           </div>
@@ -81,5 +86,14 @@ export default Vue.extend({
 <style scope lang="scss">
 select {
   width: 15rem;
+}
+
+input + p, select + p {
+  color: red;
+  float: left;
+}
+
+select + p {
+  margin-left: 15px;
 }
 </style>
